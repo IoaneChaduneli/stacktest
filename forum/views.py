@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from forum.models import Question
 from forum.forms import QuestionCreateForm
 from django.urls import reverse_lazy
@@ -68,6 +68,16 @@ class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['title', 'text']
     template_name = 'forum/question_edit.html'
 
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Question.objects.all()
+        return Question.objects.filter(user = self.request.user)
+
+class QuestionDeleteView(LoginRequiredMixin, DeleteView):
+    model = Question
+    template_name = 'forum/question_confirm_delete.html'
+    fields = ['title', 'text']
+    success_url = reverse_lazy('forum:home')
     def get_queryset(self):
         if self.request.user.is_staff:
             return Question.objects.all()
