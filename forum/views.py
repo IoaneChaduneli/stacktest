@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class HomeView(ListView):
     model = Question
     template_name = 'forum/question_list.html'
-    paginate_by = 4
+    paginate_by = 6
 
     def get_queryset(self):
         return Question.objects.filter(title__icontains=self.request.GET.get('q', ""))
