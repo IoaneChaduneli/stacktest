@@ -24,6 +24,13 @@ class QuestionDetailView(DetailView):
     model = Question
     template_name = 'forum/question_detail.html'
 
+    def get(self, request, *args, **kwargs):
+        self.object: Question = self.get_object()
+        self.object.views += 1
+        self.object.save()
+        context = self.get_context_data(object = self.object)
+        return self.render_to_response(context)
+
 # def create_question_view(request):
     # question = Question(
     #       user_id = request.GET.get('user'),
