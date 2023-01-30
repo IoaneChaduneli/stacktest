@@ -35,14 +35,14 @@
               </div> 
               <div class="text-white ms-3 dropdown">
                 {% if request.user.is_authenticated %}
-                    <img width="30" 
+                    <a href = "{% url 'users:auth-profile' %}"><img width="30" 
                         src="{{ request.user.profile.icon.url }}"
                         class="rounded-circle"
-                        alt="{{ request.user.username }}-picture"> {{ request.user.username }}
+                        alt="{{ request.user.username }}-picture"> </a> {{ request.user.username }}
                       <a class="btn btn-danger ms-3" href="{% url 'users:auth-logout' %}">Logout</a>
                 {% else %}
                     <a class="btn btn-primary ms-3" href="{% url 'users:auth-login' %}">Login</a>
-                    <a class="btn btn-success ms-3" href="#">Sign up</a>
+                    <a class="btn btn-success ms-3" href="{% url 'users:auth-signup' %}">Sign up</a>
                 {% endif %}
         </div>
     </nav>

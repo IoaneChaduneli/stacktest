@@ -12,7 +12,9 @@ class HomeView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Question.objects.filter(title__icontains=self.request.GET.get('q', ""))
+        return Question.objects \
+        .filter(title__icontains=self.request.GET.get('q', "")) \
+        .order_by('-create_time')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
