@@ -33,12 +33,17 @@
                   <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
               </div> 
-              <div class = "text-white ms-3 dropdown">
+              <div class="text-white ms-3 dropdown">
                 {% if request.user.is_authenticated %}
-                    <img width="30" src = {{ request.user.profile.icon.url }}>{{request.user.username}}
-
+                    <img width="30" 
+                        src="{{ request.user.profile.icon.url }}"
+                        class="rounded-circle"
+                        alt="{{ request.user.username }}-picture"> {{ request.user.username }}
+                      <a class="btn btn-danger ms-3" href="{% url 'users:auth-logout' %}">Logout</a>
+                {% else %}
+                    <a class="btn btn-primary ms-3" href="{% url 'users:auth-login' %}">Login</a>
+                    <a class="btn btn-success ms-3" href="#">Sign up</a>
                 {% endif %}
-            </div>
         </div>
     </nav>
     {% block content %}
