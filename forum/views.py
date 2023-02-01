@@ -104,3 +104,5 @@ class QuestionDeleteView(LoginRequiredMixin, DeleteView,StaffRequiredMixin):
         if self.request.user.is_staff:
             return Question.objects.all()
         return Question.objects.filter(user = self.request.user)
+
+

@@ -2,7 +2,7 @@ from django import forms
 from users.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-
+from users.models import Profile
 
 class UserCreationForm(forms.ModelForm):
     confirm_password = forms.CharField(validators=[
@@ -37,3 +37,9 @@ class UserCreationForm(forms.ModelForm):
         user.set_password(user.password)
         user.save(commit)
         return user
+
+class Profileform(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+    

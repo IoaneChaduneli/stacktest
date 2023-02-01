@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -8,4 +9,5 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    icon = models.ImageField(upload_to='users_profile_pics/')
+    icon = models.ImageField(upload_to='users_profile_pics/', blank=True)
+    

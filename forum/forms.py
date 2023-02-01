@@ -1,5 +1,6 @@
 from django import forms
 from forum.models import Question
+from users.models import Profile
 
 class QuestionCreateForm(forms.ModelForm):
     class Meta:
@@ -12,4 +13,5 @@ class SearchForm(forms.Form):
                                         'class':"form-control me-2",
                                         'placeholder': "search"
     }))
+
 
