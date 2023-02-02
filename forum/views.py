@@ -115,7 +115,7 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object: Answer = form.save(commit=False)
         self.object.user = self.request.user
-        self.get_object
+        t
         return super().form_valid(form)
     
     
