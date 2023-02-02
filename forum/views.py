@@ -108,15 +108,17 @@ class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
-    fields = ['text', 'question']
+    fields = ['text']
     success_url = reverse_lazy('forum:home')
     template_name = 'forum/answer_add.html'
 
     def form_valid(self, form):
         self.object: Answer = form.save(commit=False)
         self.object.user = self.request.user
+        self.get_object
         return super().form_valid(form)
-
+    
+    
   
 class AnswerDetailView(DetailView):
     model = Question

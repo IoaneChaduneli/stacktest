@@ -18,4 +18,4 @@ class SearchForm(forms.Form):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
-        fields = ['text', 'question']
+        fields = ['text']
