@@ -22,9 +22,11 @@ class Question(models.Model):
 
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     text = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
+
+    
 
 class Tag(models.Model):
     name = models.CharField(max_length=120)

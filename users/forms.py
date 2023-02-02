@@ -41,5 +41,5 @@ class UserCreationForm(forms.ModelForm):
 class Profileform(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ('icon',)
     

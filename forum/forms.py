@@ -1,6 +1,6 @@
 from django import forms
-from forum.models import Question
-from users.models import Profile
+from forum.models import Question, Answer
+
 
 class QuestionCreateForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,7 @@ class SearchForm(forms.Form):
     }))
 
 
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['text', 'question']

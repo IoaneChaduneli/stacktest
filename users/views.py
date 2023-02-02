@@ -27,7 +27,13 @@ class RegisterView(CreateView):
 class ProfileView(LoginRequiredMixin, CreateView):
     model = Profile
     template_name = 'auth/profile.html'
-    fields = '__all__'
+    fields = ('icon',)
     success_url = reverse_lazy('users:auth-profile')
+
+    def form_valid(self, form):
+        self.object: Profile = form.save(commit=False)
+        self.object.user = self.request.user
+        return super().form_valid(form)
+
 
 

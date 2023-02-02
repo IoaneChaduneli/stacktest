@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from forum.models import Question
+from forum.models import Question, Answer
 from forum.forms import QuestionCreateForm, SearchForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -89,20 +89,35 @@ class StaffRequiredMixin:
         return Question.objects.filter(user = self.request.user)
 
 
-class QuestionUpdateView(LoginRequiredMixin, UpdateView):
+class QuestionUpdateView(StaffRequiredMixin,LoginRequiredMixin, UpdateView):
     model = Question
     fields = ['title', 'text']
     template_name = 'forum/question_edit.html'
 
 
-class QuestionDeleteView(LoginRequiredMixin, DeleteView,StaffRequiredMixin):
+class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
     model = Question
     template_name = 'forum/question_confirm_delete.html'
     fields = ['title', 'text']
     success_url = reverse_lazy('forum:home')
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            return Question.objects.all()
-        return Question.objects.filter(user = self.request.user)
+    # def get_queryset(self):
+    #     if self.request.user.is_staff:
+    #         return Question.objects.all()
+    #     return Question.objects.filter(user = self.request.user)
 
 
+class AnswerCreateView(LoginRequiredMixin, CreateView):
+    model = Answer
+    fields = ['text', 'question']
+    success_url = reverse_lazy('forum:home')
+    template_name = 'forum/answer_add.html'
+
+    def form_valid(self, form):
+        self.object: Answer = form.save(commit=False)
+        self.object.user = self.request.user
+        return super().form_valid(form)
+
+  
+class AnswerDetailView(DetailView):
+    model = Question
+    
