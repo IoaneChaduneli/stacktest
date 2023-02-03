@@ -32,7 +32,7 @@
                         <h5 class="font-weight-bold mb-0 d-block">{{ request.user.question_set.all|length }}</h5>
                         <small class="text-muted"> <i class="fas fa-user mr-1"></i>Questions</small> 
                     </li>
-                     <li class="list-inline-item"> <h5 class="font-weight-bold mb-0 d-block">{{ question.answer_set.all|length }}</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Answers</small> </li> 
+                     <li class="list-inline-item"> <h5 class="font-weight-bold mb-0 d-block">{{ request.user.question.answers.all|length }}</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Answers</small> </li> 
                     </ul>
                  </div> 
                  <div class="px-4 py-3"> <h5 class="mb-0">About</h5> 

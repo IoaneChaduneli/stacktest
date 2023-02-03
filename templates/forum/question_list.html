@@ -12,7 +12,7 @@
         <div class="row border-bottom mb-3" id="question-{{ question.id }}">
             <div class="col d-flex flex-column justify-content-center text-end">
                 {# <span>0 votes</span> #}
-                <span>{{ question.answer_set.all|length }} answers</span>
+                <span>{{ question.answers.all|length }} answers</span>
                 <span>{{ question.views }} views </span>
             </div>
             <div class="col-10">
@@ -26,9 +26,9 @@
                 </p>
                 <div class="d-flex justify-content-between">
                     <div>
-                        {% for tag in question.tag_set.all %}
+                         {% for tag in question.tag_set.all %}
                             <span class="badge bg-primary">{{ tag.name }}</span>
-                        {% endfor %}
+                        {% endfor %} 
                     </div>
                     <div>
                         <p>

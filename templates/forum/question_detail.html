@@ -16,14 +16,14 @@
             {{ question.text }}
         </p>
         <div class="answer-list">
-            {% for answer in question.answer_set.all %}
+            {% for answer in question.answers.all %}
                 <div id="answer-{{ answer.pk }}">
                     <h3> {{ answer.user }} &mdash; {{ answer.create_time|timesince }}</h3>
                     <p>{{ answer.text }}</p>
                 </div>
             {% endfor %}
             <div> 
-                <form action="{% url 'forum:answer-add'%}"  method="POST">
+                <form action="{% url 'forum:answer-add'%}?question={{question.pk}}"  method="POST">
                     {% comment %} {{ answer_form.as_p }} {% endcomment %}
                      {% csrf_token %}
                     <button class="btn btn-success">Answer</button>
