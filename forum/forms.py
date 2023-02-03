@@ -1,6 +1,7 @@
 from django import forms
 from forum.models import Question, Answer
-
+from django.shortcuts import render, redirect,get_object_or_404
+from django.urls import reverse_lazy
 
 class QuestionCreateForm(forms.ModelForm):
     class Meta:
@@ -19,5 +20,6 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['text']
-    
+
+        
     

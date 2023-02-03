@@ -4,6 +4,7 @@ from forum.models import Question, Answer
 from forum.forms import QuestionCreateForm, SearchForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from forum.forms import AnswerForm
 
 # Create your views here.
 
@@ -109,21 +110,23 @@ class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
-    fields = ['text']
+    form_class = AnswerForm
     template_name = 'forum/answer_add.html'
+
     
 # we use this form if we want not to use all the fields of database(models), e make the validation
 
     def form_valid(self, form):
-        self.object: Answer = form.save(commit=False)
-        self.object.user = self.request.user
-        question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
-        self.object.question = question
-        return super().form_valid(form)
+            self.object: Answer = form.save(commit=False)
+            self.object.user = self.request.user
+            question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
+            self.object.question = question
+            return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('forum:question-detail', kwargs = {'pk':self.object.question.pk}) # how to make dynamic reverse lazy
 
+    
     
     
     
