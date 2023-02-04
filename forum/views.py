@@ -68,12 +68,10 @@ class QuestionDetailView(DetailView):
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
-    fields = [
-
-        'title', 
-        'text'
-    ]
-
+    fields = ['title',
+                'text',
+            ]
+    
     success_url = reverse_lazy('forum:home')
 
     def form_valid(self, form):
@@ -110,7 +108,7 @@ class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
-    form_class = AnswerForm
+    fields = ['text']
     template_name = 'forum/answer_add.html'
 
     
@@ -125,13 +123,8 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('forum:question-detail', kwargs = {'pk':self.object.question.pk}) # how to make dynamic reverse lazy
-
-    
-    
-    
     
     
   
-class AnswerDetailView(DetailView):
-    model = Question
+
     
