@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
 # Create your models here.
 
 
@@ -11,6 +12,7 @@ class Question(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     modify_time = models. DateTimeField(auto_now=True)
     views = models.PositiveBigIntegerField(default=0, blank=True)
+    tags = TaggableManager()
 
     def __str__(self) -> str:
         return self.title
@@ -29,6 +31,4 @@ class Answer(models.Model):
 
     
 
-class Tag(models.Model):
-    name = models.CharField(max_length=120)
-    question = models.ManyToManyField(Question, blank=True)
+

@@ -26,9 +26,9 @@
                 </p>
                 <div class="d-flex justify-content-between">
                     <div>
-                         {% for tag in question.tag_set.all %}
-                            <span class="badge bg-primary">{{ tag.name }}</span>
-                        {% endfor %} 
+                        {% for tag in question.tags.all %}
+                            <span class="badge bg-primary">{{ tag }}</span>
+                        {% endfor %}
                     </div>
                     <div>
                         <p>

@@ -81,7 +81,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('forum:home')
 
     def form_valid(self, form):
-        self.object: Answer = form.save(commit=False)
+        self.object: Question = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
@@ -123,11 +123,11 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
 # we use this form if we want not to use all the fields of database(models), e make the validation
 
     def form_valid(self, form):
-            self.object: Answer = form.save(commit=False)
-            self.object.user = self.request.user
-            question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
-            self.object.question = question
-            return super().form_valid(form)
+        self.object: Answer = form.save(commit=False)
+        self.object.user = self.request.user
+        question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
+        self.object.question = question
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('forum:question-detail', kwargs = {'pk':self.object.question.pk}) # how to make dynamic reverse lazy
