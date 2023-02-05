@@ -12,10 +12,10 @@ class HomeView(ListView):
     model = Question
     template_name = 'forum/question_list.html'
     paginate_by = 6
-    ordering = '-create_time'
+    
 
     def get_queryset(self):
-        input_text = self.request.GET.get('q', '')
+        input_text = self.request.GET.get('q', '') 
         if input_text.startswith('@'):
             # if input_text.startswith('user:'):
             #     parts = input_text.split(':')
@@ -75,9 +75,7 @@ class QuestionDetailView(DetailView):
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
-    # fields = ['title',
-    #             'text',
-    #         ]
+    
     form_class = QuestionCreateForm
     
     success_url = reverse_lazy('forum:home')
@@ -85,6 +83,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object: Answer = form.save(commit=False)
         self.object.user = self.request.user
+        self.object.save()
         return super().form_valid(form)
 
 

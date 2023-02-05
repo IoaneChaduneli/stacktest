@@ -6,11 +6,12 @@ from django.forms import ModelMultipleChoiceField
 
 class QuestionCreateForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), widget = forms.CheckboxSelectMultiple)
+        
     class Meta:
         model = Question
         fields = ['title', 'text']
-    
-    
+
+
 
 class SearchForm(forms.Form):
     q = forms.CharField(max_length=120, widget=forms.TextInput(attrs={
