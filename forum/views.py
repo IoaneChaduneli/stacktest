@@ -14,6 +14,8 @@ class HomeView(ListView):
     paginate_by = 6
     
 
+
+
     def get_queryset(self):
         input_text = self.request.GET.get('q', '') 
         if input_text.startswith('@'):
@@ -106,13 +108,14 @@ class QuestionUpdateView(StaffRequiredMixin,LoginRequiredMixin, UpdateView):
 class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
     model = Question
     template_name = 'forum/question_confirm_delete.html'
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'tags']
     success_url = reverse_lazy('forum:home')
     # def get_queryset(self):
     #     if self.request.user.is_staff:
     #         return Question.objects.all()
     #     return Question.objects.filter(user = self.request.user)
 
+    
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Answer
