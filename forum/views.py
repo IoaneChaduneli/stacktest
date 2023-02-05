@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from forum.models import Question, Answer
-from forum.forms import QuestionCreateForm, SearchForm
+from forum.forms import QuestionCreateForm, SearchForm, AnswerForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from forum.forms import AnswerForm
@@ -117,25 +118,37 @@ class QuestionDeleteView(StaffRequiredMixin,LoginRequiredMixin, DeleteView):
 
     
 
-class AnswerCreateView(LoginRequiredMixin, CreateView):
-    model = Answer
-    fields = ['text']
-    template_name = 'forum/answer_add.html'
+# class AnswerCreateView(LoginRequiredMixin, CreateView):
+#     model = Answer
+#     fields = ['text']
+#     template_name = 'forum/answer_add.html'
 
     
 # we use this form if we want not to use all the fields of database(models), e make the validation
 
-    def form_valid(self, form):
-        self.object: Answer = form.save(commit=False)
-        self.object.user = self.request.user
-        question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
-        self.object.question = question
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     self.object: Answer = form.save(commit=False)
+    #     self.object.user = self.request.user
+    #     question = get_object_or_404(Question,pk=self.request.GET.get('question')) 
+    #     self.object.question = question
+    #     return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy('forum:question-detail', kwargs = {'pk':self.object.question.pk}) # how to make dynamic reverse lazy
+    # def get_success_url(self):
+    #     return reverse_lazy('forum:question-detail', kwargs = {'pk':self.object.question.pk}) # how to make dynamic reverse lazy
     
-    
+@login_required
+def question_detail(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    answer = Answer(user=request.user, question=question)
+
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save()
+            return redirect(question)
+    else:
+        form = AnswerForm(instance=answer)
+    return render(request, 'forum/question_detail.html', {'question': question, 'form': form})
   
 
     

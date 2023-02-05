@@ -23,12 +23,15 @@
                 </div>
             {% endfor %}
             <div> 
-                <form action = "{% url 'forum:answer-add'%}?question={{question.pk}}"  method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     {% comment %} {{ answer_form.as_p }} {% endcomment %}
-                    {{form}}
+                    <div class="form-floating">
+
+                    {{ form.as_p }}
                     {% csrf_token %}
-                    
+                
                     <button class="btn btn-success">Answer</button>
+                </div>
                 </form>
             </div>
         </div>
